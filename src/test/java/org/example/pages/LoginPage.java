@@ -1,6 +1,9 @@
 package org.example.pages;
 
+import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.android.nativekey.KeyEvent;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -8,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.io.IOException;
 import java.time.Duration;
 
 public class LoginPage {
@@ -38,19 +42,32 @@ public class LoginPage {
     private WebElement loginErrorMessage;
 
 
-    public void fillUsernameWithPassword(String user, String pass, boolean clickToBtn) {
-        wait.until(ExpectedConditions.visibilityOf(username));
-        username.clear();
-        username.sendKeys(user);
+    /**
+     * The function `fillUsernameWithPassword` fills the username and password fields and with provided values and
+     * *optionally clicks a login button.
+     *
+     * @param user       The `user` parameter is a String that represents the username.
+     * @param pass       The `pass` parameter is a String that represents the password.
+     * @param clickToBtn is a boolean flag that determines whether to click a login button after filling in the
+     *                   username and password fields.
+     **/
 
-        wait.until(ExpectedConditions.visibilityOf(password));
-        password.clear();
-        password.sendKeys(pass);
+    public void fillUsernameWithPassword(String user, String pass, boolean clickToBtn) {
+
+        sendKey(user, username); // text  -  webElement
+        sendKey(pass, password);// text  -  webElement
 
         if (clickToBtn) {
-            clickToLogin();
+            // clickToLogin();
+            clickToBtn(loginBtn);
         }
 
+    }
+
+    public void sendKey(String txt, WebElement element) {
+        wait.until(ExpectedConditions.visibilityOf(element));
+        element.clear();
+        element.sendKeys(txt);
     }
 
 
@@ -60,9 +77,31 @@ public class LoginPage {
     }
 
 
+    public void clickToBtn(WebElement element) {
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+        element.click();
+    }
+
+
     public void checkErrorText(String expectedMsg) {
         wait.until(ExpectedConditions.visibilityOf(loginErrorMessage));
         Assert.assertEquals(loginErrorMessage.getText(), expectedMsg, "შეცდომა ტექსტის შედარებისას");
+    }
+
+
+    public void useDefaultKeys() throws IOException, InterruptedException {
+
+
+        // https://appium.readthedocs.io/en/latest/en/commands/mobile-command/
+        //  driver.executeScript("mobile: pressButton", ImmutableMap.of("name", "home"));
+
+        // driver.pressKey(new KeyEvent(AndroidKey.APP_SWITCH));
+
+        //        ProcessBuilder pb = new ProcessBuilder("adb", "-s", "emulator-5554", "shell","am", "force-stop", "com.swaglabsmobileapp");
+        //        pb.redirectErrorStream(true);
+        //        Process p = pb.start();
+        //        p.waitFor();
+
     }
 
 
