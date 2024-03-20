@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
+import io.qameta.allure.Step;
 import org.example.Utils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -55,6 +56,8 @@ public class LoginPage {
      *                   username and password fields.
      **/
 
+
+    @Step("ეს მეთოდი ავსებს ინფორმაციას მომხამრებელს და პაროლს")
     public void fillUsernameWithPassword(String user, String pass, boolean clickToBtn) {
 
         sendKey(user, username); // text  -  webElement
@@ -66,6 +69,12 @@ public class LoginPage {
         }
 
     }
+
+    @Step("ეს არის უბრალო მეთოდი - სტეპი")
+    public void simpleMethod() {
+        //
+    }
+
 
     public void sendKey(String txt, WebElement element) {
         wait.until(ExpectedConditions.visibilityOf(element));
