@@ -16,22 +16,22 @@ public class Base {
     public static Config conf = Config.getInstance();
 
 
+
     @BeforeSuite
     public static void setUp() throws MalformedURLException {
 
 
-        String username;
-        String password;
+  //      String username;
+ //       String password;
 
-        if (Objects.equals(conf.read("device"), "phone")) {
-            username =  conf.read("usernameForPhone");
-            password =  conf.read("passwordForPhone");
-
-        } else {
-            username =  conf.read("usernameForPhone2");
-            password =  conf.read("passwordForPhone2");
-        }
-
+//        if (Objects.equals(conf.read("device"), "phone")) {
+//            username = conf.read("usernameForPhone");
+//            password = conf.read("passwordForPhone");
+//
+//        } else {
+//            username = conf.read("usernameForPhone2");
+//            password = conf.read("passwordForPhone2");
+//        }
 
 
         System.out.println("დავიწყე კავშირის დამყარება");
@@ -47,6 +47,7 @@ public class Base {
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723"), cap);
         System.out.println("დავასრულე დრაივერის გამართვა");
     }
+
 
 
     @AfterSuite

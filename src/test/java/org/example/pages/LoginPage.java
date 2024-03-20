@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
+import org.example.Utils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -19,11 +20,13 @@ public class LoginPage {
     protected AndroidDriver driver;
     private WebDriverWait wait;
 
+    private Utils utils;
+
     public LoginPage(AndroidDriver driver) {
         this.driver = driver;
-
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // 10 seconds wait
         PageFactory.initElements(driver, this);
+        utils = new Utils(driver);
     }
 
 
@@ -86,6 +89,11 @@ public class LoginPage {
     public void checkErrorText(String expectedMsg) {
         wait.until(ExpectedConditions.visibilityOf(loginErrorMessage));
         Assert.assertEquals(loginErrorMessage.getText(), expectedMsg, "შეცდომა ტექსტის შედარებისას");
+    }
+
+
+    public void clickToHome() {
+        utils.clickToHomeBtn();
     }
 
 
